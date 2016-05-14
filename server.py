@@ -33,7 +33,7 @@ def generate_tree():
 
     tree_render = render_node(tree.root)
 
-    return render_template('tree.html', tree=tree_render, closed=tree.root.is_closed())
+    return render_template('tree.html', form=form, tree=tree_render, closed=tree.root.is_closed())
 
 
 def render_node(node):
