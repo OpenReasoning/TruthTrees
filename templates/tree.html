@@ -4,7 +4,11 @@ Logical Formulas:<br />
 <br /><br />
 <br />
 
-
+{% if closed %}
+<div style="color: green">Argument is valid</div>
+{% else %}
+<div style="color: red">Argument is invalid</div>
+{% endif %}
 <div class="tree">
     <ul>
         {{ tree }}
