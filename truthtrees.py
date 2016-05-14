@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
+from __future__ import print_function, unicode_literals
 import argparse
 from forseti.formula import Formula, Predicate, Symbol, Not, And, Or, If, Iff
 import forseti.parser
@@ -76,10 +76,10 @@ class TreeNode(object):
         for formula in self.formulas:
             if formula.broken is False:
                 return True
-        expand = True
+        expand = []
         for child in self.children:
-            expand = expand and child.can_expand()
-        return expand
+            expand.append(child.can_expand())
+        return True in expand
 
     def add_children(self):
         """
@@ -124,7 +124,7 @@ class TreeFormula(object):
         :type formula: Formula
         """
         self.formula = formula
-        self.broken = False
+        self.broken = not self.can_break()
         self.number = None
 
     def can_break(self):
@@ -214,7 +214,7 @@ class TruthTree(object):
                 for left_node in left_nodes:
                     if self.add_formula(left_node, formula.args[0].args[0]):
                         continue
-                    self.add_formula(left_node, Not(Formula.args[0].args[1]))
+                    self.add_formula(left_node, Not(formula.args[0].args[1]))
                 for right_node in right_nodes:
                     if self.add_formula(right_node, Not(formula.args[0].args[0])):
                         continue
@@ -278,8 +278,11 @@ def runner(formulas, goal):
 
 if __name__ == "__main__":
     PARSER = argparse.ArgumentParser(description="Generate Truth Table for a logical formula")
-    PARSER.add_argument('formulas', metavar='formula', type=str, nargs="+", help='Logical formula')
+    PARSER.add_argument('formulas', metavar='formula', type=str, nargs="*", help='Logical formula')
     PARSER.add_argument('goal', metavar='goal', type=str, help='Goal Formula')
     PARSER_ARGS = PARSER.parse_args()
     SHORT_TRUTH_TABLE = runner(PARSER_ARGS.formulas, PARSER_ARGS.goal)
-    pass
+    if SHORT_TRUTH_TABLE.root.is_closed():
+        print("Argument is valid")
+    else:
+        print("Argument is invalid")
