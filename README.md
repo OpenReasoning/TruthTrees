@@ -3,6 +3,8 @@ Truth Trees
 
 This is a flask app (with a python module backing it) that can be used to solve generate a truth tree for any given number of formulas and one goal.
 
+![Flask App](https://raw.githubusercontent.com/MasterOdin/TruthTrees/master/static/screenshot.png)
+
 It uses a functional format for inputting logical formulas. This is the base identity for inputs:
 ```
 A

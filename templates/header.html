@@ -7,10 +7,6 @@
             font-size: 14pt;
         }
 
-        .formula {
-            font-family: "Consolas", monospace;
-        }
-
         input[type=text] {
             width: 1000px;
             font-size: 12pt;
@@ -83,7 +79,7 @@
             text-decoration: none;
             color: #666;
             font-family: arial, verdana, tahoma, serif;
-            font-size: 11px;
+            font-size: 15px;
             display: inline-block;
 
             border-radius: 5px;
@@ -105,6 +101,26 @@
         }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        /* a hack for very wide trees */
+        $(document).ready(function() {
+            var tree = $('.tree');
+            var initialHeight = $(tree.find('li')[0]).height();
+            var initialWidth = tree.width();
+            for (var i = 1000; i < 10000; i += 400) {
+                tree.width(i);
+                if ($(tree.find('li')[0]).height() < initialHeight) {
+                    break;
+                }
+            }
+
+            if ($(tree.find('li')[0]).height() == initialHeight) {
+                tree.width(initialWidth);
+            }
+
+            tree.css("margin-bottom", ($(tree.find('li')[0]).height() + 100));
+        });
+    </script>
 </head>
 <body>
 <div id="header">
